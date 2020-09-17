@@ -17,6 +17,10 @@ Voer de main-methode uit. De Server is nu opgestart. Navigeer via je browser naa
 Bekijk de startcode in de klasse `HttpServer` en probeer te begrijpen op welk moment de server wacht op Connecties van
 een client. Gebruik Google met de zoektermen *java server socket* om je analyse te ondersteunen.
 
+Merk op dat er in de `serverSocket.accept()` methode wordt gewacht totdat er een request is gedaan. Dit kun je zien door
+met de debugger een breakpoint te zetten op regel 25. Na het opstarten zal de applicatie pas dit breakpoint bereiken
+als er een request is gedaan.
+
 Wat opvalt is dat je Server momenteel maar één Http-request kan afhandelen. Pas dit aan zodat het mogelijk wordt 
 om meerdere Http-requests af te handelen.
 
