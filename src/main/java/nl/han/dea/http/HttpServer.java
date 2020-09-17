@@ -24,6 +24,7 @@ public class HttpServer {
             var acceptedSocket = serverSocket.accept();
             var connectionHandler = new ConnectionHandler(acceptedSocket);
             connectionHandler.handle();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
