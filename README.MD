@@ -8,10 +8,12 @@ protocol er uit zou moeten zien wordt besloten door een groep mensen, genaamd de
 Deze besluiten worden uitgebracht als een *Request for Comments* (RFC). De RFC voor het Http-protocol kan hier gevonden worden: 
 [RFC7230](https://datatracker.ietf.org/doc/html/rfc7230).
 
+Hieronder volgen een aantal oefeningen, waarbij je in verschillende klassen wijzigingen moet maken. Zorg dat je tenminste 
+na elke oefening de nodigde _refactors_ doet om de code overzichtelijk te houden.
+
 # Oefeningen
 Bekijk de startcode in de master-branch. De server is op te starten via de main-methode van de `HttpServer`
 klasse. Zorg ervoor dat je de startcode op een plaats (directory) zet waar geen spaties in voorkomen.
-
 
 Voer de main-methode uit. De Server is nu opgestart. Navigeer via je browser naar [http://localhost:8383/index.html](http://localhost:8383/index.html) 
 om te zien wat de server teruggeeft. Mocht je een Connection-error krijgen in de log van IntelliJ bij het gebruiken van Chrome, 
@@ -40,10 +42,12 @@ Ook de URL [http://localhost:8383/what-a-terribly-bigoted-server.html](http://lo
 zal precies dezelfde content retourneren. In dit onderdeel zul je dit gaan verbeteren.
 
 ### 2.1) Toevoegen van een _index.html_
-De inhoud van de response staat nu nog hard-coded in de `ConnectionHandler`. We gaan deze inhoud verplaatsen naar een
-_index.html_, die we daarna zullen inlezen en retourneren via de response.
-* Creëer de map _src/main/resources_. Dit is de default plaats binnen een Maven project om extra bestanden te plaatsen.
-  Hierbij kun je denken aan plaatjes, configuratiebestanden of html-bestanden.
+Een Http-response bevat altijd een _status-line_, een of meer Http-headers en optioneel een Http-body (de inhoud van het 
+bericht). De body van de response staat nu nog hard-coded in de `ConnectionHandler`. We gaan deze body verplaatsen naar
+een _index.html_ bestand, die we daarna zullen inlezen en retourneren via de response.
+* Creëer de map _src/main/resources_. Dit is de default plaats binnen een Maven project om niet-Java bestanden te plaatsen
+  die nodig zijn voor het correct functioneren van een applicatie. Hierbij kun je denken aan plaatjes, configuratiebestanden 
+  of html-bestanden.
 * Voeg in deze nieuwe map een submap _pages/_ toe en plaats hierin een _index.html_ met de volgende content
 
 ```html
@@ -62,7 +66,7 @@ _index.html_, die we daarna zullen inlezen en retourneren via de response.
 ```
 
 ### 2.2) Retourneer _index.html_
-Pas de `ConnectionHandler` zodanig aan dat voor de body van het HTTP-request de file _index.html_ wordt gebruikt.
+Pas de `ConnectionHandler` zodanig aan dat voor de Http-body van het Http-request de file _index.html_ wordt gebruikt.
 * Gebruik voor het inlezen van een bestand de onderstaande methode.
 * Plaats deze in een aparte klasse genaamd `HtmlPageReader`.
 * Merk op dat onderstaande methode verwacht dat het html-bestand in de map _pages/_ staat.
@@ -112,20 +116,21 @@ dezelfde _index.html_ teruggeeft, los van de url van het daadwerkelijke request.
   [http://localhost:8383/about.html](http://localhost:8383/about.html) te navigeren.
 * Merk op dat het nu enkel mogelijk moet zijn bestaande pagina's op te vragen, de happy-flow.
 
-### 2.6) Retourneren van correcte Http-status codes.
-Momenteel wordt nog standaard de Http-statuscode 200 geretourneerd. Zorg ervoor dat de `ConnectionHandler` de
-correcte statuscode retourneert indien de _request-target_ niet bestaat. Zie voor de beschrijvingen [RFC7231](https://datatracker.ietf.org/doc/html/rfc7231).
-* Zorg ervoor dat de relevante methodes uit `HtmlPageReader` een _Exception_ gooien indien er een Html pagina geladen
+### 2.6) Retourneren van de correcte Http-status
+Momenteel wordt nog standaard de Http-statuscode _200_ geretourneerd. Zorg ervoor dat de `ConnectionHandler` de
+correcte statuscode retourneert indien de _request-target_ niet bestaat. Zie voor de beschrijvingen van Http-statuscodes 
+[RFC7231](https://datatracker.ietf.org/doc/html/rfc7231).
+* Zorg ervoor dat de relevante methodes uit `HtmlPageReader` een _Exception_ gooien indien er een html-pagina geladen
   moet worden die niet bestaat.
 * Gebruik deze exceptie in de `ConnectionHandler` om zowel de juiste Http-header, als Http-body te retourneren.
 
 # Extra uitdaging
 * Verbeter de foutafhandeling. Momenteel wordt enkel onderscheid gemaakt tussen 404 en 200. Voeg ook, op een correcte
-  en zinnig manier ondersteuning voor de colgende foutcode's toe:
+  en zinnige manier ondersteuning voor de volgende Http-statuscodes toe:
   * 500 INTERNAL SERVER ERROR
   * 501 NOT IMPLEMENTED
   * 505 HTTP VERSION NOT SUPPORTED
-  
+
 
 * Het Http-protocol kent meer methodes dan enkel de *GET*. Lees [RFC7230](https://tools.ietf.org/html/rfc7230) voor meer 
   informatie en implementeer ook de methode *HEAD*.
