@@ -10,8 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static java.lang.System.currentTimeMillis;
-
 public class ConnectionHandler {
 
     private static final String HTTP_HEADERS = "HTTP/1.1 %d %s\n" +
@@ -95,7 +93,8 @@ public class ConnectionHandler {
             // Voorbeeld uit request: date: Fri, 11 Feb 2022 15:40:01 GMT
 
             LocalDateTime localDateTime = LocalDateTime.now();
-            var httpDateFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH).withZone(ZoneId.of("GMT"));
+            var httpDateFormatter = DateTimeFormatter
+                    .ofPattern("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH).withZone(ZoneId.of("GMT"));
             String date = localDateTime.format(httpDateFormatter);
             // LocalDate parsedDate = LocalDate.parse(text, formatter);
 
