@@ -1,4 +1,5 @@
-Ve
+# Introductie
+
 Deze oefening is deel van de DEA Course aan de Hogeschool Arnhem/Nijmegen. Onderwerp is het bekend
 raken met het Http-protocol in een simpele Java-server.
 
